@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": false,
+      "baseUrl": "./",
+      "paths": { 
+        "@src/*": ["./src/*"],
+        "@assets/*": ["./src/assets/*"],
+        "@commons/*": ["./src/commons/*"],
+        "@screens/*": ["./src/screens/*"],
+        "@configs/*": ["./src/configs/*"],
+        "@constants/*": ["./src/constants/*"],
+        "@contexts/*": ["./src/context/*"],
+        "@helpers/*": ["./src/helpers/*"],
+        "@hooks/*": ["./src/hooks/*"],
+        "@validations/*": ["./src/validations/*"],
+        "@core-ui/*": ["./src/core-ui/*"],
+        "@navigations/*": ["./src/navigations/*"],
+
+       
+        "@commons": ["./src/commons/index"],
+        "@screens": ["./src/screens/index"],
+        "@configs": ["./src/configs/index"],
+        "@constants": ["./src/constants/index"],
+        "@context": ["./src/context/index"],
+        "@helpers": ["./src/helpers/index"],
+        "@hooks": ["./src/hooks/index"],
+        "@validations": ["./src/validations/index"],
+        "@core-ui": ["./src/core-ui/index"],
+        "@navigations": ["./src/navigations/index.js"],
+      }
+    },
+    "exclude": ["node_modules", "dist"]
+  }
+  
