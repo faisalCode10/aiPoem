@@ -1,0 +1,59 @@
+explain each folder stucture
+
+. assets
+.commons
+.configs
+.constants
+.contexts
+.coure-ui
+.helpers
+.hooks
+.navigations
+.screens
+.validations
+
+
+
+ const fetchPoemData = async (keyPoints, structure, tone, wordCount, style) => {
+    const apiUrl = `https://us-central1-courseai-9b4f6.cloudfunctions.net/generatePoem`;
+
+    // JSON object with parameters
+
+    const data = {
+        keyPoints,
+        structure,
+        tone,
+        wordCount,
+        style,
+    };
+
+    try {
+        // Send POST request
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        // Check if the request was successful (status code 200)
+
+        if (response.ok) {
+            const generatedPoem = await response.json();
+            console.log(generatedPoem.poem)
+            return generatedPoem.poem;
+        } else {
+            console.error("Error:", response.status);
+            console.error(await response.text());
+            // Handle error cases if needed
+            return null;
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+        // Handle error cases if needed
+        return null;
+    }
+};
+
+fetchPoemData()

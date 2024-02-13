@@ -1,0 +1,191 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
+import React, {useState} from 'react';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+
+import {IMAGES} from '../../assets';
+
+import {useNavigation} from '@react-navigation/native';
+
+import {MyText} from '../../MyText/index';
+
+import {ScrollView} from 'react-native-gesture-handler';
+
+import {storeSavedData} from '../../utils';
+
+import {nanoid} from 'nanoid/non-secure';
+
+const Poem = ({route}: {route: any}) => {
+  const poemData = route.params.poemData;
+  const PrePoems = route.params.poemItems;
+  console.log(poemData);
+
+  const navigate = useNavigation();
+
+  const goToHome = () => {
+    navigate.navigate('Home' as never);
+  };
+
+  const store_poem = async () => {
+    try {
+      await storeSavedData({...poemData, uid: nanoid()});
+      Alert.alert('Poem saved successfully');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <>
+      {PrePoems ? (
+        <View>
+          <Text style={{color:'red'}}>{PrePoems.content}</Text> 
+        </View>
+      ) : (
+        <View style={styles.poemContainer}>
+          <View style={styles.header}>
+            <View style={styles.arrowContainer}>
+              <TouchableOpacity
+                onPress={goToHome}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: responsiveHeight(2.5),
+                }}>
+                <Image source={IMAGES.leftArrow} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.iconsContainer}>
+              <TouchableOpacity
+                style={styles.bookmarkIcon}
+                onPress={store_poem}>
+                <Image source={IMAGES.bookmark} />
+                <MyText title="Save" h5 color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.shareIcon}>
+                <Image source={IMAGES.share} />
+                <MyText title="Share" h5 color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* PoemTitle */}
+          <View style={styles.poemHeader}>
+            <MyText
+              title={poemData.title}
+              h1
+              color="black"
+              style={styles.poemHeaderText}
+            />
+          </View>
+          {/* Poem Data */}
+          <View>
+            <ScrollView>
+              <View style={styles.generatedText}>
+                <Text style={{color: 'black', textAlign: 'center'}}>
+                  {poemData.content}
+                </Text>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      )}
+    </>
+  );
+};
+
+export default Poem;
+
+const styles = StyleSheet.create({
+  poemContainer: {
+    backgroundColor: '#F8E9D6',
+    flex: 1,
+    padding: responsiveWidth(4),
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  arrowContainer: {
+    width: responsiveWidth(1),
+    height: responsiveHeight(1),
+  },
+
+  iconsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    marginTop: responsiveHeight(1),
+  },
+  bookmarkIcon: {
+    flexDirection: 'column',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    marginRight: responsiveWidth(5),
+  },
+  bookmark: {
+    justifyContent: 'center',
+    marginLeft: responsiveWidth(12),
+  },
+  shareIcon: {
+    flexDirection: 'column',
+    alignSelf: 'stretch',
+    marginRight: responsiveWidth(5),
+  },
+  poemHeader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: responsiveWidth(70),
+    marginTop: responsiveHeight(4),
+    marginLeft: responsiveWidth(5),
+  },
+  poemHeaderText: {
+    fontSize: responsiveFontSize(2.3),
+    color: '#000',
+    fontWeight: '700',
+    fontFamily: 'popins',
+  },
+  generatedText: {
+    marginTop: responsiveHeight(2),
+    width: '100%',
+  },
+  poemText: {
+    textAlign: 'justify',
+    color: '#CB8538',
+  },
+});
+
+
+
+
+
+
+
+/////
+
+
+ { poemData ? (
+            <TouchableOpacity style={styles.bookmarkIcon} onPress={store_poem}>
+              <Image source={IMAGES.bookmark} />
+              <MyText title="Save" h5 color="black" style={styles.save} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.bookmarkIcon}
+              onPress={() => removePoem(poem.uid)}
+              // onPress={store_poem}
+              >
+              <Image source={IMAGES.delete} />
+              <MyText title="remove" h5 color="black" style={styles.save} />
+            </TouchableOpacity>
+          )}
